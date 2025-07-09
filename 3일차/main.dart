@@ -67,6 +67,8 @@ void main() {
   //클래스 사용
   var num1 = Integer(123);
   // var player = Player();
+  ver player = player(name, age);
+  print(name, age);
 
   // print(num1.get());
 
@@ -74,6 +76,6 @@ void main() {
 
   // print(num1.set);
 
-  num1.changeNumber = 11;
-  print(num.givenNumber);
+  // num1.changeNumber = 11;
+  // print(num1.retrurnString);
 }
