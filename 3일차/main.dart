@@ -1,36 +1,15 @@
 void main() {
-  //Variable Case.1
-  int intTemp = 1;
-  print(intTemp);
-  double dblTemp = 2.2;
-  print(dblTemp);
-  num numIntTemp = 3;
-  print(numIntTemp);
-  num numDblTemp = 4.4;
-  print(numDblTemp);
-  String strTemp = "Hello!";
-  print(strTemp);
+  List list = [1, 2, 3];
 
-  //Variable Case.2
-  var varInt = 1;
-  var varDouble = 2.2;
-  var varString = "Hello!";
-  print("$varInt $varDouble $varString");
-  print("RESULT[$varInt, $varDouble, '$varString' ]");
+  if (list.isEmpty) {
+    print("리스트가 비어있어요.");
+  } else {
+    print("리스트가 안비어있어요");
+  }
 
-  //Variable Case.3
-  dynamic dynInt = 1;
-  dynamic dynDouble = 2.2;
-  dynamic dynString = "Hello!";
-  print("$dynInt $dynDouble $dynString");
-
-  //Constant Case.1
-  const double cMathpi = 3.141592;
-  const cChangeRate = 1.3;
-  print("cMathpi $cChangeRate");
-
-  //Constant Case.2
-  final String fFirstFruit = "Apple";
-  final fSecondFruit = "Mango";
-  print("$fFirstFruit $fSecondFruit");
+  list.isEmpty
+      ? print("리스트가 비어있어요.")
+      : list.first == 1
+      ? print("첫번째값은 1입니다.")
+      : print("첫번째값은 1이 아닙니다.");
 }
