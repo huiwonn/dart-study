@@ -1,0 +1,73 @@
+
+class Integer {
+  
+  late int _value;
+
+  Integer([int givenNumber = 0]) {
+    _value = givenNumber;
+  }
+
+  
+  int get() {
+    return _value;
+  }
+
+  
+  void set(int givenNumber) {
+    _value = givenNumber; 
+
+  
+  String get retrurnString => "$_value";
+
+ 
+  set changeInteger(int givenNumber) => _value = givenNumber;
+
+  /
+
+  String get asString => "$_value";
+}
+}
+
+
+class NewInteger extends Integer with ActivationFlag {
+  //List
+  List<int> _list = []; //[0]
+
+  newInteger([int givenValue = 0]) {
+    _value = givenValue;
+  }
+
+  @override //Integer 클래스에 있는 코드에서 이 기능을 추가해서 씀
+  void set(int givenvalue) {
+    if(acctivated == true)
+    _list.add(_value);
+
+    print("set함수 실행함. 현재 저장된 결과는 $_list임")
+    else{
+    print ("set함수 실행 안 함")
+    }
+    super.set(givenvalue);
+ 
+    //super= 우리가 클래스를 생성할 때 extends 뒤에 쓴 클래스를 지칭함
+  }
+
+  String get asString => "현재값: $_value, 기존에 지정했었던 값: $_list";
+
+  List getold() {
+    return _list;
+  }
+}
+
+mixin ActivationFlag on Integer{ 
+  bool _flag = true;
+
+  bool get acctive => _flag;
+  set acctive(bool givenFlag) => (_flag =givenFlag);
+}
+
+void main() {
+  var num =newInteger();
+ 
+  
+  
+}
