@@ -8,20 +8,19 @@ class Player {
   late int age;
 
   //생성자 만들기
-  Player(String givenname, []) {
-    name = givenname;
-    age = givenage;
+  Player(String givenname) {
+    // name = givenname;
+    // age = givenage;
   }
 
-  //get 함수 
+  //get 함수
   //반환 할 자료명 함수이름() {retrun 반환할 값}
-  String returnname(){
+  String returnname() {
     return name;
-  } 
+  }
 
-  int returnage(){
+  int returnage() {
     return age;
-
   }
 
   //getter 함수
@@ -29,12 +28,11 @@ class Player {
   String get getternname => name;
   int get getternage => age;
 
-
   //set 함수
   //반환할 자료명 함수이름(사용자가 변경할 값){}
- void setname(String givenname){
-  name = givenname;
- }
+  void setname(String givenname) {
+    name = givenname;
+  }
 
   //setter 함수
   set changename(String givenname) => name = givenname;
@@ -48,14 +46,12 @@ void main() {
 
   // print(sadff.age);
 
-//  print(Player.gettename);
-//  print(Player.getterage);
+  //  print(Player.gettename);
+  //  print(Player.getterage);
 
-var Player = 
- Player.changename = "짱구";
- Player.changeage = 5;
+  // var Player =
+  //  Player.changename = "짱구";
+  //  Player.changeage = 5;
 
- print(Player.changename);
-
- 
- }
+  //  print(Player.changename);
+}
