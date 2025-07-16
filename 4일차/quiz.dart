@@ -32,15 +32,13 @@ class GoodInteger extends Integer {
   void set(int givenname) {
     _goodlist.add(_val);
     super.set(givenname);
+
+    List returnlist() {
+      return _goodlist;
+    }
   }
 
-  List returnlist() {
-    return _goodlist;
+  void main() {
+    var num1 = GoodInteger(9);
   }
-}
-
-void main() {
-  var num1 = GoodInteger(9);
-
-  print(num1.get());
 }

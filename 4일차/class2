@@ -1,73 +1,53 @@
 
-class Integer {
-  
-  late int _value;
+//여러 클래스들이 공통적으로 가지고 있는 기능이지만
+//각 클래스들 마다 미세하게 작동하는 부분이 다른 경우
+//이런 기능이 있다 라고 작성만 하는 것 
 
-  Integer([int givenNumber = 0]) {
-    _value = givenNumber;
-  }
 
-  
-  int get() {
-    return _value;
-  }
+abstract class Rectangle {
 
-  
-  void set(int givenNumber) {
-    _value = givenNumber; 
-
-  
-  String get retrurnString => "$_value";
-
- 
-  set changeInteger(int givenNumber) => _value = givenNumber;
-
-  /
-
-  String get asString => "$_value";
-}
+ void draw();
 }
 
 
-class NewInteger extends Integer with ActivationFlag {
-  //List
-  List<int> _list = []; //[0]
 
-  newInteger([int givenValue = 0]) {
-    _value = givenValue;
+class Circle implements Rectangle{
+  @override 
+
+  late int radius;
+
+  @override
+  void draw(){
+    print("radius가 $radius인 원을 그립니다.");
   }
 
-  @override //Integer 클래스에 있는 코드에서 이 기능을 추가해서 씀
-  void set(int givenvalue) {
-    if(acctivated == true)
-    _list.add(_value);
-
-    print("set함수 실행함. 현재 저장된 결과는 $_list임")
-    else{
-    print ("set함수 실행 안 함")
-    }
-    super.set(givenvalue);
- 
-    //super= 우리가 클래스를 생성할 때 extends 뒤에 쓴 클래스를 지칭함
-  }
-
-  String get asString => "현재값: $_value, 기존에 지정했었던 값: $_list";
-
-  List getold() {
-    return _list;
-  }
+Circle([int givenRadius = 1]) : radius = givenRadius;
 }
 
-mixin ActivationFlag on Integer{ 
-  bool _flag = true;
 
-  bool get acctive => _flag;
-  set acctive(bool givenFlag) => (_flag =givenFlag);
+class Squre implements Rectangle(){
+  late int garo, sero;
+
+@override
+  void draw(){("가로가 $garo,세로가 $sero인 사각형을 그립니다.");
 }
+
+Squre([int givenraro = 5, int givensero = 5])
+: garo = givenraro,
+  sero = givensero;
+}
+
+
 
 void main() {
-  var num =newInteger();
- 
-  
-  
+  var circle = Circle(10);
+  var Squre = Squre(10.,24);
+//var rect = Rectangle();
+   //위의 코드는 사용x 
+   //추상 클래스는 실체를 가질 수 없다.
+
+
+circle.draw();
+Squre.draw();
+
 }

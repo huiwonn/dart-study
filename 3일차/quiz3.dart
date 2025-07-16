@@ -8,7 +8,7 @@ class Player {
   late int age;
 
   //생성자 만들기
-  Player(String givenname) {
+  Player(String givenname, int age) {
     // name = givenname;
     // age = givenage;
   }
