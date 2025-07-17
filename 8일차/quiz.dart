@@ -8,38 +8,60 @@ import 'dart:io';
 
 void create(Map database, HttpRequest request) async {
   // 생성 코드 작성
+  //1.사용자가 요청한 값을 문자열로 변환하는 기능을 만들자
+  //(request로 서버에게 전달된 값은 일반 사람이 읽을 수 없는 stream 데이터로 받아옴)
+  //(그래서 이걸 서버에서 실제 값을 확인 할 수 있게 문자열로 변환하는 기능을 구현)
 
-  var content = await utf8.decoder.bind(request).join();
-  var transaction = jsonDecode(content) as Map;
+  var bodydata = await utf8.decoder.bind(request).join();
+  var Mapdata = jsonDecode(bodydata) as Map;
   var key, value;
 
-  print("\>comtent : $content");
 
-  transaction.forEach((k, v) {
+  print("\>bodydata : $bodydata");
+
+ Mapdata.forEach((k, v) {
     key = k;
     value = v;
   });
+//DB에 사용자가 입력한 값을 실제로 추가해보자
+//추가할 때 같은 키로 데이터를 추가하면 어떻게 되는건지
+//우리는 수정,조회,삭제 등등을 할 때 키로 데이터를 확인하는데,
+//같은 키를 가진 데이터가 있으면 컴퓨터는 어떤 데이터를 삭제해야할지 모름
+//그래서 생서ㅇ하려는 키가 이미 있으면 생성하지 못하게 예외처리해야함
 
-  if (database.containsKey(key) == false) {
-    database[key] = value;
-    content = "Success < $transaction created >";
+//키가 이미 존재하는지에 대한 조건문 처리 방법*/
+  if (database.containsKey(key)) {
+    bodydata = "생성 실패! 이미 존재하는 키 입니다.";
   } else {
-    content = "Fail < $key already exist >";
+    bodydata = "생성 성공";
   }
 
-  printAndSendHttpResponse(database, request, content);
+// //키가 존재하지 않는지에 대한 조건문 처리 방법*/
+// if(database,containsKey(Key) == false){
+// //키가 없는 경우
+// }else{
+// //키가 있는 경우
+// }
+
+  printAndSendHttpResponse(database, request, bodydata);
 }
 
 void read(Map database, HttpRequest request) async {
   // 조회 코드 작성
-
+  //url에 있는 사용자가 입력해준 사용자IP값을 가져와야함
+  //request.url : 사용자가 요청한 url 
+  //pathSegments : 
   var key = request.uri.pathSegments.last;
   var content, transaction;
 
   if (database.containsKey(key) == true) {
+    //실제 database에 있는 값을 사용자에게 response로 전달
+  
     transaction = {};
     transaction[key] = database[key];
-    content = "Success <$transaction retrieved>";
+    content = "조회 성공! 조회한 데이터는 ${database[key]}입니다";
+
+    //
   } else {
     content = "fail< $key not-exist>";
   }
@@ -53,7 +75,6 @@ void update(Map database, HttpRequest request) async {
   var key, value;
 
   print("\> content        : $content");
-
   transaction.forEach((k, v) {
     key = k;
     value = v;
@@ -96,9 +117,20 @@ Future main() async {
       try {
         switch (request.method) {
           // 메서드들에 대한 CASE 작성
-
-          case "POST":
+          case "GET":
+          //CRUD에서 READ 담당할 때 GET
+          read(database, request);
+          break;
+        
+          case "PUT":
+          update(database, request);
+          break;
+          case "PUSH":
+          create(database, request);
+          break;
+          case "DELETE":
             create(database, request);
+            delete(database, request);
             break;
             case 
 
@@ -146,11 +178,14 @@ void printAndSendHttpResponse(
   String content,
 ) async {
   print("\$ $content \n current DB      : $database");
+
+  var data = utf8.encode(content);
+  //data라는 변수에 content에 있는 한글로 제대로 확인 할 수 있게 변경
   request.response
     ..headers.contentType = ContentType('text', 'plain', charset: 'utf-8')
-    ..headers.contentLength = content.length
+    ..headers.contentLength = data.length
     ..statusCode = HttpStatus.ok
-    ..write(content);
+    ..add(data);
 
   await request.response.close();
 }
